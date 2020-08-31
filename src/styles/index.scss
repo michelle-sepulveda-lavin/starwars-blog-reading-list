@@ -1,3 +1,46 @@
-/* 
-    General Styles
-*/
+body{
+    background: black;
+    font-family: 'Russo One', sans-serif;
+}
+
+#logo {
+    color: white;
+    font-size: 2.8rem;
+    font-weight: bold;
+}
+
+.navbar {
+    background: black;
+}
+
+/* .carousel-inner > .carousel-item > img {
+    height: 32rem;
+  } */
+
+h2 {
+    color: rgb(255, 230, 0);
+}
+
+.card-text{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 13px;
+}
+
+.dropdown-toggle{
+    font-size: 1.2rem;
+    border: 1px solid white;
+    margin-top: 1rem;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.dropdown-toggle:hover{
+    cursor: pointer;
+}
+
+small {
+    color: rgb(143, 118, 7);
+}
+.tarjeta {
+    margin-top: 6rem;
+}

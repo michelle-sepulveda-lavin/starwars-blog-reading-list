@@ -1,42 +1,96 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			planets: {},
+			characters: {},
+			vehicles: {},
+			onePlanet: {},
+			onePerson: {},
+			oneVehicle: {},
+			favorites: [],
+			oneTest: {}
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
+			getCharacters: async (page = 1) => {
+				try {
+					const response = await fetch(`https://swapi.dev/api/people/?page=${page}`);
+					const data = await response.json();
+					if (response.ok) {
+						setStore({
+							characters: data
+						});
+					} else {
+						alert("Error");
+					}
+				} catch (error) {
+					alert(error);
+				}
 			},
-			loadSomeData: () => {
-				/**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
-				*/
+			getPlanets: (page = 1) => {
+				fetch(`https://swapi.dev/api/planets/?page=${page}`)
+					.then(resp => resp.json())
+					.then(data => {
+						setStore({
+							planets: data
+						});
+					});
 			},
-			changeColor: (index, color) => {
-				//get the store
+			getVehicles: (page = 1) => {
+				fetch(`https://swapi.dev/api/vehicles/?page=${page}`)
+					.then(resp => resp.json())
+					.then(data => {
+						setStore({
+							vehicles: data
+						});
+					});
+			},
+			getOnePlanet: id => {
+				fetch(`https://swapi.dev/api/planets/${id}`)
+					.then(resp => resp.json())
+					.then(data => {
+						setStore({
+							onePlanet: data
+						});
+					});
+			},
+			getOnePerson: id => {
+				fetch(`https://swapi.dev/api/people/${id}`)
+					.then(resp => resp.json())
+					.then(data => {
+						setStore({
+							onePerson: data
+						});
+					});
+			},
+			getOneVehicle: id => {
+				fetch(`https://swapi.dev/api/vehicles/${id}`)
+					.then(resp => resp.json())
+					.then(data => {
+						setStore({
+							oneVehicle: data
+						});
+					});
+			},
+			getFavorites: (nombre, url) => {
 				const store = getStore();
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
+				setStore({
+					favorites: store.favorites.concat({ name: nombre, idUrl: url })
 				});
-
-				//reset the global store
-				setStore({ demo: demo });
+			},
+			deleteFavorite: deleted => {
+				setStore({
+					favorites: getStore().favorites.filter(elem => elem.name != deleted)
+				});
+			},
+			getTest: id => {
+				fetch(id)
+					.then(resp => resp.json())
+					.then(data => {
+						setStore({
+							oneTest: data
+						});
+					});
 			}
 		}
 	};
